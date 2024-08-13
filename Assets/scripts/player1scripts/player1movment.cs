@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class player1movmen : MonoBehaviour
 {
+    public levelmanegar script;
     // Start is called before the first frame update
     Rigidbody2D rp;
     float speed = 6f;
@@ -22,15 +23,13 @@ public class player1movmen : MonoBehaviour
         player1indoor = false;
         player2indoor = false;
         
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player1indoor && player2indoor == true)
-        {
-            SceneManager.LoadScene("Level2");
-        }
+       
 
     }
     private void FixedUpdate()
@@ -75,31 +74,30 @@ public class player1movmen : MonoBehaviour
         
         if (collision.CompareTag("doortriger1"))
         {
-            player1indoor = true;
+            
+            Debug.Log("enter1");
+            script.player1indoor = true;
+
             door1anim.SetBool("closetoopen", true);
 
         }
 
-        if (collision.CompareTag("doortriger2"))
-        {
-                player2indoor = true;
-                door2anim.SetBool("closetoopen2", true);
-        }
         
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("doortriger1"))
         {
-            
+
             door1anim.SetBool("closetoopen", false);
+            Debug.Log("eixt1");
+            script.player1indoor = false;
 
         }
-        if (collision.CompareTag("doortriger2"))
-        {
-            
-            door2anim.SetBool("closetoopen2", false);
-
-        }
+      
+    }
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1.5f);
     }
 }
